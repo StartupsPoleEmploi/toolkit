@@ -1,3 +1,14 @@
-# tools
+# toolkit
+Quelques outils utiles
 
-Tous les outils et petites fonctions utiles quelque soit le langage
+## bash
+
+### SelectMenu
+
+Permet d'effectuer une selection visuelle parmi une liste d'éléments.
+
+## Javascript
+
+### RGPWhat
+
+Permet l'affichage de Popin de consentement RGPD. (bêta)
