@@ -13,7 +13,7 @@
  *  - fixed: boolean (default true). If false, css position = "relative". If true css position = "absolute"
  *  - validateFollow: true/false -> is equal to a click on "ok" on first document click (default true). A false value specifies a click to button "ok" as mandatory
  *  - consent: array of specifics cookies (optional)
- *  - buttons : default="ok|notOk|choice" -> displayed buttons
+ *  - default: default value at first display => 'accept' (default) or 'deny'
  *  - locale: json to change default text
  *          ex: var locale={
  *                    'ok': 'Ok',
@@ -103,7 +103,7 @@
 			'denyAll': 'Interdire tous les cookies',
 			'accept': 'Autoriser',
 			'deny': 'Interdire',
-			'close': 'X'
+			'close': 'Fermer'
 		};
 		if(typeof options!=="undefined") {
 			if(typeof options.buttons!=="undefined") buttons=options.buttons;
@@ -210,7 +210,7 @@
 				list.push({"key": e.key,"value": e.value});
 			});
 			autoSelectButtons(consentOptions);
-			saveCookieConsent(cookieName,consentOptions);
+			//saveCookieConsent(cookieName,consentOptions);
 		}
 
 		var runCallback=function(e) {
@@ -249,16 +249,16 @@
 					case "ok":
 						$('<button>'+locale.ok+'</button>').appendTo(txt).click(function() {
 							div.slideUp();
-							consentOptions.forEach(function(e) {
-								e.value=true;
-							});
+							//consentOptions.forEach(function(e) {
+							//	e.value=true;
+							//});
 							saveCookieConsent(cookieName,consentOptions);
 							runCallbacks(consentOptions);
 						});
 						break;
 					case "notOk":
 						$('<button>'+locale.notOk+'</button>').appendTo(txt).click(function() {
-							txt.slideUp();
+							div.slideUp();
 							consentOptions.forEach(function(e) {
 								e.value=false;
 							});
@@ -268,7 +268,7 @@
 						break;
 					case "choice":
 						$('<button>'+locale.choice+'</button>').appendTo(txt).click(function() {
-							txt.slideUp();
+							//txt.slideUp();
 							doc.slideDown();
 							//doc.slideToggle();
 						});
@@ -289,8 +289,8 @@
 				saveConsent(null,false);
 			}).appendTo(row);
 			var buttonClose=$(document.createElement("button")).addClass('action-close').html(locale.close).click(function() {
-				saveCookieConsent(cookieName,consentOptions);
-				div.slideUp();
+				//saveCookieConsent(cookieName,consentOptions);
+				doc.slideUp();
 			}).appendTo(row);
 
 			/* Ajoute chaque ligne de demande de consentement */
@@ -306,12 +306,12 @@
 				e.accept=$(document.createElement("button")).addClass('accept').html(locale.accept).click(function() {
 					e.value=true;
 					setButtonClass(e);
-					saveCookieConsent(cookieName,consentOptions);
+					//saveCookieConsent(cookieName,consentOptions);
 				}).appendTo(col);
 				e.denied=$(document.createElement("button")).addClass('deny').html(locale.deny).click(function() {
 					e.value=false;
 					setButtonClass(e);
-					saveCookieConsent(cookieName,consentOptions);
+					//saveCookieConsent(cookieName,consentOptions);
 				}).appendTo(col);
 				
 				col.appendTo(row);
@@ -340,7 +340,7 @@
 
 				//Initialisation aux valeurs par defaut
 				jsonOptions.forEach(function(econsent) {
-					econsent.value=(typeof econsent.default!=="undefined" && econsent.default=="accept")?true:false;
+					econsent.value=(typeof econsent.default==="undefined" || econsent.default=="accept")?true:false;
 				});
 
 				if(typeof jsonCookie!=="object") jsonCookie=[];
