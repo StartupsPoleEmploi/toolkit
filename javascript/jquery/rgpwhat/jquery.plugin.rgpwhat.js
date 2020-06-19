@@ -82,7 +82,15 @@
  * - Add locales
  */
 (function($) {
-	$.infoCookie=$.rgpWhat=function(text,options) {
+	var scripts=document.getElementsByTagName("script");
+	var currentLocation="";
+
+	if(scripts.length) {
+    	var whoAmi=scripts[scripts.length-1].src;
+		currentLocation=whoAmi.replace(/^(.*\/).*$/,"$1");
+	}
+
+   	$.infoCookie=$.rgpWhat=function(text,options) {
 		var className="rgpwhat";
 		var cookieName="rgpwhat";
 		var delay=1000;
@@ -139,7 +147,7 @@
 			var src="";
 
 			if(name==="") {
-				src="/css/jquery/rgpwhat/rgpwhat.css";
+				src=currentLocation+"rgpwhat/rgpwhat.css";
 			} else {
 				src=name;
 			}

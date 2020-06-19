@@ -1,8 +1,9 @@
 .rgpwhat {background-color: rgba(33,33,33,0.9); color: white; text-align: center; line-height: 2.5em; padding: 2px; vertical-align: middle; position: relative; top: 0;}
-.rgpwhat button {line-height: 2.2em; margin-top: 2px; opacity: .9; color: white; background-color: #1BD2A4; border-radius: 5px; border: 0; padding: 0 20px; margin-left: 10px;}
+.rgpwhat a {color: #5Aa0f2;}
+.rgpwhat button {line-height: 2.2em; margin-top: 2px; opacity: .9; color: white; background-color: #1BD2A4; border-radius: 5px; border: 0; padding: 0 20px; margin-left: 10px; opacity: 1; font-weight: bold;}
 .rgpwhat button:hover {opacity: 1;}
-.rgpwhat .consent-list {background-color: black; padding: 1em; width: 100%;}
-.rgpwhat .consent-list button {background-color: red; margin-left: 10px;}
+.rgpwhat .consent-list {background-color: #111; padding: 1em; width: 100%;}
+.rgpwhat .consent-list button {background-color: #500; margin-left: 10px;}
 .rgpwhat .consent-list button.selected {background-color: #1BD2A4;}
 .rgpwhat .consent-list .all-cookies-choice {width: 50%; margin: auto; display: inline-block;}
 .rgpwhat .consent-list .all-cookies-choice .action-close {border-radius: 20px; line-height: .5em; padding: .5em; float: right; background-color: #555; color: white;}
