@@ -330,11 +330,21 @@
 
 		/* Initialise les valeurs de chaque objet json représentant un cookie en spécifiant par "value" si le bouton est sur autorisé ou interdire */
 		var initConsentOptions=function(consentCookie,consentOptions) {
+			var showMe=false;
 			var jsonCookie=[];
 			if(typeof consentCookie!=='undefined') {
 				jsonCookie=JSON.parse(consentCookie);
 			}
 
+			// Teste s'il faut dire d'afficher le bandeau: ex au moins un tags non renseigné
+			var tagList=[];
+			jsonCookie.forEach(function(e) {
+				if(typeof e.key==='string')
+					tagList.push(e.key);
+			});
+			showMe=consentOptions.some(function(e) {
+				return tagList.indexOf(e.key)==-1;
+			});
 			if(typeof consentOptions!=="undefined") {
 				var jsonOptions=consentOptions; //JSON.parse(JSON.stringify(consentOptions));
 
@@ -343,7 +353,7 @@
 					econsent.value=(typeof econsent.default==="undefined" || econsent.default=="accept")?true:false;
 				});
 
-				if(typeof jsonCookie!=="object") jsonCookie=[];
+				//if(typeof jsonCookie!=="object") jsonCookie=[];
 				jsonCookie.forEach(function(ecookie) {
 					jsonOptions.forEach(function(eoptions) {
 						if(eoptions.key==ecookie.key) {
@@ -351,8 +361,8 @@
 						}
 					});
 				});
-				return jsonOptions;
 			}
+			return showMe;
 		}
 
 		var show=function() {
@@ -366,9 +376,9 @@
 		/* Main */
 		var consentCookie=getCookie(cookieName);
 
-		initConsentOptions(consentCookie,consentOptions);
+		var showMe=initConsentOptions(consentCookie,consentOptions);
 
-		if(typeof consentCookie==="undefined" || forceDisplay) {
+		if(showMe || forceDisplay) {
 			runCallbacks(consentOptions);
 			if(delay) setTimeout(function() {show();},delay);
 			else show();
