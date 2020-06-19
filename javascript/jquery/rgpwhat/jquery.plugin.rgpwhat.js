@@ -23,7 +23,7 @@
  *                    'denyAll': 'Interdire tous les cookies',
  *                    'accept': 'Autoriser',
  *                    'deny': 'Interdire',
- *                    'close': 'X'
+ *                    'close': 'Fermer'
  *                   };
  *
  * Example: (Attention to mandatory tags)
@@ -269,7 +269,7 @@
 					case "choice":
 						$('<button>'+locale.choice+'</button>').appendTo(txt).click(function() {
 							//txt.slideUp();
-							doc.slideDown();
+							doc.slideToggle();
 							//doc.slideToggle();
 						});
 						break;
@@ -331,6 +331,7 @@
 		/* Initialise les valeurs de chaque objet json représentant un cookie en spécifiant par "value" si le bouton est sur autorisé ou interdire */
 		var initConsentOptions=function(consentCookie,consentOptions) {
 			var showMe=false;
+
 			var jsonCookie=[];
 			if(typeof consentCookie!=='undefined') {
 				jsonCookie=JSON.parse(consentCookie);
@@ -345,6 +346,7 @@
 			showMe=consentOptions.some(function(e) {
 				return tagList.indexOf(e.key)==-1;
 			});
+
 			if(typeof consentOptions!=="undefined") {
 				var jsonOptions=consentOptions; //JSON.parse(JSON.stringify(consentOptions));
 
