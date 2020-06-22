@@ -21,6 +21,7 @@
  *                    'choice': 'Choisir mes cookies',
  *                    'acceptAll': 'Autoriser tous les cookies',
  *                    'denyAll': 'Interdire tous les cookies',
+ *                    'validate': 'Valider mes choix',
  *                    'accept': 'Autoriser',
  *                    'deny': 'Interdire',
  *                    'close': 'Fermer'
@@ -109,6 +110,7 @@
 			'choice': 'Choisir mes cookies',
 			'acceptAll': 'Autoriser tous les cookies',
 			'denyAll': 'Interdire tous les cookies',
+			'validate': 'Valider mes choix',
 			'accept': 'Autoriser',
 			'deny': 'Interdire',
 			'close': 'Fermer'
@@ -257,9 +259,6 @@
 					case "ok":
 						$('<button>'+locale.ok+'</button>').appendTo(txt).click(function() {
 							div.slideUp();
-							//consentOptions.forEach(function(e) {
-							//	e.value=true;
-							//});
 							saveCookieConsent(cookieName,consentOptions);
 							runCallbacks(consentOptions);
 						});
@@ -295,6 +294,11 @@
 				$(this).addClass('selected');
 				buttonAcceptAll.removeClass('selected');
 				saveConsent(null,false);
+			}).appendTo(row);
+			var buttonValidateAll=$(document.createElement("button")).addClass('validate').html(locale.validate).click(function() {
+				div.slideUp();
+				saveCookieConsent(cookieName,consentOptions);
+				runCallbacks(consentOptions);
 			}).appendTo(row);
 			var buttonClose=$(document.createElement("button")).addClass('action-close').html(locale.close).click(function() {
 				//saveCookieConsent(cookieName,consentOptions);
