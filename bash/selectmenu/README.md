@@ -2,6 +2,9 @@
 
 Permet de créer un menu de navigation par touches fléchées.
 
+![](./images/snap-selectmenu.png)
+
+
 Options             | Description                                                                                                  |
 :-------------------| :------------------------------------------------------------------------------------------------------------|
 -ro                 | Retourne dans $REPLY l'offset de la selection en partant de 1, plutot que le libellé de la selection         |
