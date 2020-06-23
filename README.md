@@ -12,3 +12,6 @@ Permet d'effectuer une selection visuelle parmi une liste d'éléments.
 ### RGPWhat
 
 Permet l'affichage de Popin de consentement RGPD. (bêta)
+
+![](./javascript/jquery/rgpwhat/images/snap-rgpwhat.png)
+
