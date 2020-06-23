@@ -203,10 +203,24 @@
 			setCookie(cookieName,response,cookieDuration);
 		}
 
-		var autoSelectButtons=function(consentOptions) {
-			consentOptions.forEach(function(e) {
+		var autoSelectButtons=function(options) {
+			var allAccepted=true;
+			var allDenied=true;
+			options.consent.forEach(function(e) {
+				if(!e.value)
+					allAccepted=false; 
+				else
+					allDenied=false;
 				setButtonClass(e);
 			});
+			if(allAccepted)
+				$(options.buttonAcceptAll).addClass('selected');
+			else
+				$(options.buttonAcceptAll).removeClass('selected');
+			if(allDenied)
+				$(options.buttonDenyAll).addClass('selected');
+			else
+				$(options.buttonDenyAll).removeClass('selected');
 		}
 
 		var saveConsent=function(key,value) {
@@ -219,7 +233,7 @@
 				}
 				list.push({"key": e.key,"value": e.value});
 			});
-			autoSelectButtons(consentOptions);
+			autoSelectButtons(options);
 			//saveCookieConsent(cookieName,consentOptions);
 		}
 
@@ -234,7 +248,7 @@
 		}
 
 		var runCallbacks=function(consentOptions) {
-			/* Le cookie existe, on execute les callback */
+			/* La valeur est à true, on execute les callback */
 			consentOptions.forEach(function(e) {
 				runCallback(e);
 			});
@@ -285,12 +299,12 @@
 			
 			row=$('<div>').addClass('all-cookies-choice').appendTo(doc);
 
-			var buttonAcceptAll=$(document.createElement("button")).addClass('accept').html(locale.acceptAll).click(function() {
+			var buttonAcceptAll=options.buttonAcceptAll=$(document.createElement("button")).addClass('accept').html(locale.acceptAll).click(function() {
 				$(this).addClass('selected');
 				buttonDenyAll.removeClass('selected');
 				saveConsent(null,true);
 			}).appendTo(row);
-			var buttonDenyAll=$(document.createElement("button")).addClass('deny').html(locale.denyAll).click(function() {
+			var buttonDenyAll=options.buttonDenyAll=$(document.createElement("button")).addClass('deny').html(locale.denyAll).click(function() {
 				$(this).addClass('selected');
 				buttonAcceptAll.removeClass('selected');
 				saveConsent(null,false);
@@ -300,10 +314,9 @@
 				saveCookieConsent(cookieName,consentOptions);
 				runCallbacks(consentOptions);
 			}).appendTo(row);
-			var buttonClose=$(document.createElement("button")).addClass('action-close').html(locale.close).click(function() {
-				//saveCookieConsent(cookieName,consentOptions);
-				doc.slideUp();
-			}).appendTo(row);
+			//var buttonClose=$(document.createElement("button")).addClass('action-close').html(locale.close).click(function() {
+			//	doc.slideUp();
+			//}).appendTo(row);
 
 			/* Ajoute chaque ligne de demande de consentement */
 			consentOptions.forEach(function(e) {
@@ -317,12 +330,14 @@
 				col=$('<div>').addClass('buttons');
 				e.accept=$(document.createElement("button")).addClass('accept').html(locale.accept).click(function() {
 					e.value=true;
-					setButtonClass(e);
+					//setButtonClass(e);
+					autoSelectButtons(options);
 					//saveCookieConsent(cookieName,consentOptions);
 				}).appendTo(col);
 				e.denied=$(document.createElement("button")).addClass('deny').html(locale.deny).click(function() {
 					e.value=false;
-					setButtonClass(e);
+					//setButtonClass(e);
+					autoSelectButtons(options);
 					//saveCookieConsent(cookieName,consentOptions);
 				}).appendTo(col);
 				
@@ -383,7 +398,7 @@
 			if(div===false) {
 				div=display(consentOptions,text,className,position,fixed);
 			}
-			autoSelectButtons(consentOptions);
+			autoSelectButtons(options);
 			div.slideDown("fast")
 		}
 
@@ -393,7 +408,7 @@
 		var showMe=initConsentOptions(consentCookie,consentOptions);
 
 		if(showMe || forceDisplay) {
-			runCallbacks(consentOptions);
+			//runCallbacks(consentOptions);
 			if(delay) setTimeout(function() {show();},delay);
 			else show();
 			return true;
