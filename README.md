@@ -7,6 +7,9 @@ Quelques outils utiles
 
 Permet d'effectuer une selection visuelle parmi une liste d'éléments.
 
+![](./bash/selectmenu/images/snap-selectmenu.png)
+
+
 ## Javascript
 
 ### RGPWhat
