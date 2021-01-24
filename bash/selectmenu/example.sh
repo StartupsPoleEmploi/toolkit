@@ -2,6 +2,8 @@
 
 source selectmenu.sh;
 
-selectmenu `ls -1 /`;
+selectmenu $@ `ls -1 /`;
 
-printf "$REPLY\n";
+echo;
+echo ${REPLY[@]}
+echo;
