@@ -28,7 +28,7 @@ selectmenu() {
 			[[ "${SELECT[$i]}" != "" && $i -ne $POS ]] && STYLE="\e[100m";
 			if [ $i -eq $POS ]; then [ "${SELECT[$i]}" != "" ] && STYLE="\e[41m" || STYLE="\e[7m"; fi
 			((i++));
-			printf "$STYLE%-${ALIGN}s\x1b[0m\n" $item;
+			printf "$STYLE%-${ALIGN}s\x1b[0m\n" "$item";
 		done
 		read -rsn1 key;
 		case "$key" in
